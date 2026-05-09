@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -32,7 +31,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import com.example.uesanapp.data.model.CountryModel
 
@@ -48,12 +46,7 @@ val mockCountries = listOf<CountryModel>(
 )
 
 @Composable
-fun HomeScreen(nav: NavHostController) {
-    val gradientColors = listOf(
-        MaterialTheme.colorScheme.primary,
-        MaterialTheme.colorScheme.tertiary
-    )
-
+fun HomeScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,8 +54,7 @@ fun HomeScreen(nav: NavHostController) {
     ) {
         Surface(
             modifier = Modifier
-                .fillMaxWidth()
-                .statusBarsPadding(),
+                .fillMaxWidth(),
             color = Color.Transparent
         ) {
             Box(
