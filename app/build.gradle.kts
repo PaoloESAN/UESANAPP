@@ -61,4 +61,6 @@ dependencies {
     //Coil compose
     implementation("io.coil-kt.coil3:coil-compose:3.4.0")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.4.0")
+
+    implementation("androidx.compose.material:material-icons-core:1.7.8")
 }

@@ -2,10 +2,8 @@ package com.example.uesanapp.presentation.auth
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,7 +12,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
 @Composable
-fun LoginScreen(nav: NavHostController){
+fun LoginScreen(nav: NavHostController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -41,14 +38,14 @@ fun LoginScreen(nav: NavHostController){
         Text("Iniciar Sesion", style = MaterialTheme.typography.titleLarge)
         OutlinedTextField(
             value = email,
-            onValueChange = {email=it},
-            label = {Text("Correo Electronico")},
+            onValueChange = { email = it },
+            label = { Text("Correo Electronico") },
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
             value = password,
-            onValueChange = {password=it},
-            label = {Text("Contraseña")},
+            onValueChange = { password = it },
+            label = { Text("Contraseña") },
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation()
         )
@@ -56,7 +53,8 @@ fun LoginScreen(nav: NavHostController){
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                if(email == "admin"&& password=="12345"){
+                if (email == "admin" && password == "12345") {
+                    45
                     nav.navigate("home")
                 }
             },
