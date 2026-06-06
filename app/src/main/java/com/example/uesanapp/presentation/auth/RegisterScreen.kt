@@ -1,5 +1,6 @@
 package com.example.uesanapp.presentation.auth
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,9 +20,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.uesanapp.data.remote.FirebaseAuthManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun RegisterScreen(nav: NavHostController) {
@@ -30,6 +36,7 @@ fun RegisterScreen(nav: NavHostController) {
     var password by remember { mutableStateOf("") }
     var confirmarPassword by remember { mutableStateOf("") }
 
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -65,16 +72,27 @@ fun RegisterScreen(nav: NavHostController) {
             value = confirmarPassword,
             onValueChange = { confirmarPassword = it },
             label = { Text("Confirmar Contrasena") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            visualTransformation = PasswordVisualTransformation()
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                if(email.isNotBlank()
+                if (email.isNotBlank()
                     && password.isNotBlank()
                     && password == confirmarPassword
-                    && nombre.isNotBlank()){
-                    nav.navigate("login")
+                    && nombre.isNotBlank()
+                ) {
+
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val result = FirebaseAuthManager.registerUser(nombre, email, password)
+                        if (result.isSuccess) {
+                            nav.navigate("login")
+                        } else {
+                            val error = result.exceptionOrNull()?.message ?: "Error desconocido"
+                            Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
             },
             modifier = Modifier.fillMaxWidth()

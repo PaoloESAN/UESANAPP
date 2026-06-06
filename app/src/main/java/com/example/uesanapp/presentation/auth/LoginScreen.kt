@@ -1,5 +1,6 @@
 package com.example.uesanapp.presentation.auth
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,14 +20,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.uesanapp.data.remote.FirebaseAuthManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(nav: NavHostController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -53,9 +61,19 @@ fun LoginScreen(nav: NavHostController) {
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                if (email == "admin" && password == "12345") {
-                    45
-                    nav.navigate("home")
+                if (email.isNotBlank()
+                    && password.isNotBlank()
+                ) {
+
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val result = FirebaseAuthManager.loginUser(email, password)
+                        if (result.isSuccess) {
+                            nav.navigate("home")
+                        } else {
+                            val error = result.exceptionOrNull()?.message ?: "Error desconocido"
+                            Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
             },
             modifier = Modifier.fillMaxWidth()
