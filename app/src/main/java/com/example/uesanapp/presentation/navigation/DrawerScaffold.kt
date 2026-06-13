@@ -78,6 +78,16 @@ fun DrawerScaffold(
                     }
                 )
                 NavigationDrawerItem(
+                    label = { Text("Football") },
+                    selected = currentRoute == "football",
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        if (currentRoute != "football") {
+                            navController.navigate("football")
+                        }
+                    }
+                )
+                NavigationDrawerItem(
                     label = { Text("Cerrar Sesion") },
                     selected = false,
                     onClick = {
