@@ -5,8 +5,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
 object FirebaseAuthManager {
-    private val auth = FirebaseAuth.getInstance()
-    private val firestore = FirebaseFirestore.getInstance()
+    private val auth: FirebaseAuth get() = FirebaseAuth.getInstance()
+    private val firestore: FirebaseFirestore get() = FirebaseFirestore.getInstance()
 
     suspend fun registerUser(name: String, email: String, password: String): Result<Unit> {
         return try {
@@ -33,5 +33,9 @@ object FirebaseAuthManager {
         } catch (e: Exception) {
             Result.failure(e)
         }
+    }
+
+    fun logoutUser() {
+        auth.signOut()
     }
 }

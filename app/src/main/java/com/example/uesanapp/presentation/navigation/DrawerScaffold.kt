@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.uesanapp.data.remote.FirebaseAuthManager
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,6 +75,14 @@ fun DrawerScaffold(
                         if (currentRoute != "favorites") {
                             navController.navigate("favorites")
                         }
+                    }
+                )
+                NavigationDrawerItem(
+                    label = { Text("Cerrar Sesion") },
+                    selected = false,
+                    onClick = {
+                        FirebaseAuthManager.logoutUser()
+                        navController.navigate("login")
                     }
                 )
             }
